@@ -1,25 +1,34 @@
 require 'sinatra'
 require 'json'
+require "date"
+
+nowtime=DateTime.now
 
 # GET /show
 # (HTTPのGETメソッドで /show というパスにリクエストを送る）
-
 get '/show' do
   # Rubyのハッシュを作成、diaryという名前を付ける
-#  diary = {
-#      id: 1,
-#      title: "今日の日記",
-#      content: "きょうは雪でした。"
-#  }
+  if 0  <= nowtime.hour and nowtime.hour < 6 then
+    talk = {talk:"おやすみなさい"}
 
+  elsif 6 <= nowtime.hour and nowtime.hour < 10 then
+    talk = {talk:"おはようございます"}
+
+  elsif 10 <= nowtime.hour and nowtime.hour <19 then
+    talk = {talk:"こんにちは"}
+
+  else
+    talk = {talk:"こんばんは"}
+
+  end
   # diaryをJSONテキストに変換して返す
   # （Rubyでは、最終行はメソッドの返り値(return)）
-#  diary.to_json
+  talk.to_json
 
-  param1 = params['param1']
-  param2 = params['param2']
+#  param1 = params['param1']
+#  param2 = params['param2']
 
-  '1番目: ' + param1 + ', 2番目: ' + param2   # レスポンスを返す
+#  '1番目: ' + param1 + ', 2番目: ' + param2   # レスポンスを返す
 end
 
 # POST /edit
